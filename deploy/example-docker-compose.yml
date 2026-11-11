@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: cloudmetrics-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: cloudmetrics
+    volumes:
+      - mongo-data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - cloudmetrics-network
+
+  api:
+    build:
+      context: ../backend
+      dockerfile: ../deploy/Dockerfile.backend
+    container_name: cloudmetrics-api
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      MONGO_URI: mongodb://appuser:CHANGE_ME_IN_PRODUCTION@mongodb:27017/cloudmetrics?authSource=cloudmetrics
+      APP_VERSION: 1.0.0
+      CORS_ORIGIN: "*"
+    depends_on:
+      - mongodb
+    networks:
+      - cloudmetrics-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ../deploy/Dockerfile.frontend
+    container_name: cloudmetrics-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    networks:
+      - cloudmetrics-network
+    restart: unless-stopped
+
+volumes:
+  mongo-data:
+
+networks:
+  cloudmetrics-network:
+    driver: bridge

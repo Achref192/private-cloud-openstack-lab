@@ -1,0 +1,18 @@
+[Unit]
+Description=CloudMetrics API Service
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/opt/cloud-metrics/backend
+EnvironmentFile=/etc/cloud-metrics.env
+ExecStart=/usr/bin/node dist/main.js
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=cloud-metrics
+
+[Install]
+WantedBy=multi-user.target

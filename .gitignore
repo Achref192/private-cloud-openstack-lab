@@ -1,37 +1,87 @@
-# Dependencies
-node_modules/
-package-lock.json
 
-# Build outputs
+# ==========================================
+# NODE.JS DEPENDENCIES
+# ==========================================
+node_modules/
+
+# ==========================================
+# BUILD OUTPUTS
+# ==========================================
 dist/
 build/
+coverage/
+.nyc_output/
 
-# Environment variables
+# ==========================================
+# ENVIRONMENT VARIABLES & SECRETS
+# ==========================================
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+vault-password.txt
 
+# ==========================================
+# TERRAFORM
+# ==========================================
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# ==========================================
+# ANSIBLE
+# ==========================================
+*.retry
+ansible-vault-password
+vault_pass.txt
+
+# ==========================================
 # IDE
+# ==========================================
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
 
-# OS
+# ==========================================
+# OPERATING SYSTEM
+# ==========================================
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Logs
+# ==========================================
+# LOGS
+# ==========================================
 logs/
 *.log
 npm-debug.log*
 
-# Testing
-coverage/
-.nyc_output/
-
-# Misc
+# ==========================================
+# TEMPORARY FILES
+# ==========================================
 .cache/
 temp/
 tmp/
+
+# ==========================================
+# PRIVATE SSH KEYS
+# ==========================================
+id_rsa
+id_ed25519

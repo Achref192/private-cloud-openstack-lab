@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Task, TaskStatus, TaskPriority } from '../types';
+import { Task, TaskStatus, TaskPriority, TaskFormData } from '../types';
 
 interface TaskFormProps {
   task: Task | null;
-  onSubmit: (task: Omit<Task, '_id' | 'createdAt' | 'updatedAt'> | Partial<Task>) => void;
+  onSubmit: (task: TaskFormData) => void;
   onClose: () => void;
 }
 

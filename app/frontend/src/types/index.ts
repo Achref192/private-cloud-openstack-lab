@@ -11,6 +11,11 @@ export interface Task {
   updatedAt: string;
 }
 
+export type TaskFormData = Pick<
+  Task,
+  'title' | 'description' | 'status' | 'priority'
+>;
+
 export interface Stats {
   total: number;
   byStatus: {

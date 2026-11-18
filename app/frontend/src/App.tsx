@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Dashboard from './components/Dashboard';
 import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
-import { Task } from './types';
+import { Task, TaskFormData } from './types';
 import { api } from './services/api';
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
     loadTasks();
   }, []);
 
-  const handleCreateTask = async (task: Omit<Task, '_id' | 'createdAt' | 'updatedAt'>) => {
+  const handleCreateTask = async (task: TaskFormData) => {
     try {
       await api.createTask(task);
       await loadTasks();
@@ -108,7 +108,11 @@ function App() {
       {showForm && (
         <TaskForm
           task={editingTask}
-          onSubmit={editingTask ? (updates) => handleUpdateTask(editingTask._id, updates) : handleCreateTask}
+          onSubmit={(formData) =>
+            editingTask
+              ? handleUpdateTask(editingTask._id, formData)
+              : handleCreateTask(formData)
+         }
           onClose={handleCloseForm}
         />
       )}
